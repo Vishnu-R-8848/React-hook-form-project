@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import StoryCards from "./components/StoryCards";
 import PostCard from "./components/PostCard";
 import { RiMenuLine, RiAddLine } from "@remixicon/react";
 import Form from "./components/Form";
@@ -20,28 +19,16 @@ const App = () => {
       caption: "Living in the future of tech. Minimalism is the key.",
       tags: ["#minimal", "#tech"],
     },
+
     {
       id: 2,
-      username: "@sara_designs",
-      profileImg:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop",
-      location: "New York, USA",
-      postImg:
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop",
-      likes: "421",
-      comments: "340",
-      shares: "11",
-      caption: "Found this hidden gem while exploring the concrete jungle.",
-      tags: ["#citylife", "#aesthetic"],
-    },
-    {
-      id: 3,
       username: "@dev_vishnu",
       profileImg:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
       location: "Tokyo, Japan",
       postImg:
-        "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1000&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop",
+
       likes: "1432",
       comments: "56",
       shares: "72",
@@ -49,7 +36,7 @@ const App = () => {
       tags: ["#coding", "#tokyo"],
     },
     {
-      id: 4,
+      id: 3,
       username: "@marco_arch",
       profileImg:
         "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop",
@@ -63,21 +50,7 @@ const App = () => {
       tags: ["#architecture", "#design"],
     },
     {
-      id: 5,
-      username: "@pixel_perfect",
-      profileImg:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop",
-      location: "Seoul, South Korea",
-      postImg:
-        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1000&auto=format&fit=crop",
-      likes: "894",
-      comments: "2787",
-      shares: "578",
-      caption: "The interface is the message. UX/UI exploration for 2026.",
-      tags: ["#uiux", "#frontend"],
-    },
-    {
-      id: 6,
+      id: 4,
       username: "@nature_core",
       profileImg:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400&auto=format&fit=crop",
@@ -91,7 +64,7 @@ const App = () => {
       tags: ["#nomad", "#travel"],
     },
     {
-      id: 7,
+      id: 5,
       username: "@neon_coder",
       profileImg:
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
@@ -106,9 +79,13 @@ const App = () => {
       tags: ["#javascript", "#mern"],
     },
   ]);
-  // let storyData = [...demo]
   console.log(demo);
   const [toggleForm, setToggleForm] = useState(false);
+  const [postEdit, setPostEdit] = useState(null);
+
+  let handleEdit = (data) => {
+    setPostEdit(data);
+  };
 
   return (
     <div className="app-wrapper min-h-screen w-screen bg-gray-100 text-gray-800 flex flex-col items-center p-2 rounded-xl">
@@ -118,6 +95,8 @@ const App = () => {
           setDemo={setDemo}
           setToggleForm={setToggleForm}
           demo={demo}
+          postEdit={postEdit}
+          setPostEdit={setPostEdit}
         />
       ) : (
         <div className="app-container max-w-xs w-full h-full p-3 flex flex-col gap-5  rounded-xl">
@@ -137,14 +116,17 @@ const App = () => {
               </button>
             </div>
           </header>
-          {/* <div className="user-story-wrapper p-1 flex gap-2 overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {demo.map((data, _idx) => {
-              return <StoryCards key={_idx} data={data} />;
-            })}
-          </div> */}
           <div className="post-card-wrapper w-full p-1 flex flex-col gap-5 rounded-xl">
             {demo.map((data) => {
-              return <PostCard data={data} setDemo={setDemo} key={data.id} />;
+              return (
+                <PostCard
+                  data={data}
+                  setDemo={setDemo}
+                  key={data.id}
+                  handleEdit={handleEdit}
+                  setToggleForm={setToggleForm}
+                />
+              );
             })}
           </div>
         </div>

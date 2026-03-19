@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { RiCameraAiFill, RiUpload2Fill } from "@remixicon/react";
 import { useForm } from "react-hook-form";
 
-const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
+const Form = ({
+  setOption,
+  setDemo,
+  setToggleForm,
+  demo,
+  postEdit,
+  setPostEdit,
+}) => {
   const {
     register,
     handleSubmit,
@@ -10,34 +17,58 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
+    defaultValues: postEdit,
   });
 
+  // const [isEdit, setIsEdit] = useState(false);
+
   let handleFormSubmit = (data) => {
-    console.log(data);
-    console.log(Object.keys(data));
+    const profileFile = data.img?.[0];
+    const mediaFile = data.media_img?.[0];
 
-    const profileFile = data.img[0];
-    const mediaFile = data.media_img[0];
+    const profileUrl = profileFile
+      ? URL.createObjectURL(profileFile)
+      : postEdit?.profileImg || "";
+    const mediaUrl = mediaFile
+      ? URL.createObjectURL(mediaFile)
+      : postEdit?.postImg || "";
 
-    const profileUrl = profileFile ? URL.createObjectURL(profileFile) : "";
-    const mediaUrl = mediaFile ? URL.createObjectURL(mediaFile) : "";
+    if (postEdit) {
+      // setIsEdit((prev) => !prev);
+      setDemo((prev) =>
+        prev.map((item) =>
+          item.id === postEdit.id
+            ? {
+                ...item,
+                username: data.username,
+                location: data.location,
+                caption: data.caption,
+                profileImg: profileUrl,
+                postImg: mediaUrl,
+                // ...data,
+              }
+            : item,
+        ),
+      );
+    } else {
+      setIsEdit((prev) => !prev);
+      let newData = {
+        id: demo.length + 1,
+        username: data.username,
+        profileImg: profileUrl,
+        location: data.location,
+        postImg: mediaUrl,
+        likes: 0,
+        comments: 0,
+        shares: 0,
+        caption: data.caption,
+        tags: ["#minimal", "#tech"],
+      };
+      setDemo((prev) => [newData, ...prev]);
+    }
 
-    let newData = {
-      id: demo.length + 1,
-      username: data.username,
-      profileImg: profileUrl,
-      location: data.location,
-      postImg: mediaUrl,
-      likes: 0,
-      comments: 0,
-      shares: 0,
-      caption: data.caption,
-      tags: ["#minimal", "#tech"],
-    };
-
-    console.log(newData);
-    setDemo((prev) => [newData, ...prev]);
-    setToggleForm((prev) => !prev);
+    setPostEdit(null);
+    setToggleForm(false);
     reset();
   };
 
@@ -71,13 +102,16 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
             <RiCameraAiFill />
           </div>
           <input
-            {...register("img", { required: "Image is required" })}
+            {...register("img", {
+              required: postEdit ? false : "Image is required",
+            })}
             type="file"
             name="img"
             hidden
             id="img"
           />
         </div>
+        {errors.img && <p className="text-red-500">{errors.img.message}</p>}
 
         <div
           className="media-post-input-wrapper w-full 
@@ -92,12 +126,17 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
           </div>
           <p className="text-2xl">Upload Media Image</p>
           <input
-            {...register("media_img", { required: "Media Image is required" })}
+            {...register("media_img", {
+              required: postEdit ? false : "Image is required",
+            })}
             type="file"
             name="media_img"
             hidden
             id="media_img"
           />
+          {errors.media_img && (
+            <p className="text-red-500">{errors.media_img.message}</p>
+          )}
         </div>
         <div className="username-input-wrapper w-full">
           <input
@@ -124,7 +163,7 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
           <option value="bhopal, india">bhopal, india</option>
         </select>
         <textarea
-          {...register("caption", { required: "caption is required" })}
+          {...register("caption", { required: "caption is required" , })}
           placeholder="Write a caption..."
           className="w-full p-3 outline-0 rounded-md border focus:border-green-400"
           name="caption"

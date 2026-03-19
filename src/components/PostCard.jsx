@@ -8,14 +8,13 @@ import {
   RiDeleteBin5Line,
 } from "@remixicon/react";
 
-const PostCard = ({ data, setDemo }) => {
+const PostCard = ({ data, setDemo, handleEdit,setToggleForm }) => {
   const [options, setOptions] = useState(false);
   const [overlay, setOverlay] = useState("flex");
 
   return (
     <div
-      onDoubleClick={() => {
-        console.log(data.likes);
+      onDoubleClick={(e) => {
         let newCount = Number(data.likes) + 1;
         setDemo((prev) => {
           prev.map((item) => {
@@ -51,9 +50,6 @@ const PostCard = ({ data, setDemo }) => {
           className="card-cta-btn-container cursor-pointer flex gap-1 h-full "
           onClick={() => setOptions((prev) => !prev)}
         >
-          {/* <div className="red bg-red-500 h-3 w-3 rounded-full"></div>
-          <div className="red bg-yellow-500 h-3 w-3 rounded-full"></div>
-          <div className="red bg-green-500 h-3 w-3 rounded-full"></div> */}
           <div className="red bg-black/52 h-1 w-1 rounded-full"></div>
           <div className="red bg-black/52 h-1 w-1 rounded-full"></div>
           <div className="red bg-black/52 h-1 w-1 rounded-full"></div>
@@ -66,7 +62,13 @@ const PostCard = ({ data, setDemo }) => {
             >
               X
             </button>
-            <button className="capitalize text-xl cursor-pointer flex gap-1 justify-around  rounded-md">
+            <button
+              onClick={() => {
+                handleEdit(data);
+                setToggleForm((prev) => !prev);
+              }}
+              className="capitalize text-xl cursor-pointer flex gap-1 justify-around  rounded-md"
+            >
               <RiEdit2Line /> edit
             </button>
             <button
