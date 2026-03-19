@@ -17,16 +17,15 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
     const profileFile = data.img[0]; 
     const mediaFile = data.media_img[0];
 
-    // 2. Generate the URLs right here
     const profileUrl = profileFile ? URL.createObjectURL(profileFile) : "";
     const mediaUrl = mediaFile ? URL.createObjectURL(mediaFile) : "";
 
      let newData = {
       id: demo.length + 1,
       username: data.username,
-      profileImg: profileUrl, // <-- Now this is a URL string!
+      profileImg: profileUrl, 
       location: data.location,
-      postImg: mediaUrl,      // <-- Now this is a URL string!
+      postImg: mediaUrl, 
       likes: 0,
       comments: 0,
       shares: 0,
