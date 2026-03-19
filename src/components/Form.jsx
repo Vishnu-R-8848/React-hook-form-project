@@ -20,8 +20,6 @@ const Form = ({
     defaultValues: postEdit,
   });
 
-  // const [isEdit, setIsEdit] = useState(false);
-
   let handleFormSubmit = (data) => {
     const profileFile = data.img?.[0];
     const mediaFile = data.media_img?.[0];
@@ -34,7 +32,6 @@ const Form = ({
       : postEdit?.postImg || "";
 
     if (postEdit) {
-      // setIsEdit((prev) => !prev);
       setDemo((prev) =>
         prev.map((item) =>
           item.id === postEdit.id
@@ -51,7 +48,6 @@ const Form = ({
         ),
       );
     } else {
-      setIsEdit((prev) => !prev);
       let newData = {
         id: demo.length + 1,
         username: data.username,
@@ -163,7 +159,7 @@ const Form = ({
           <option value="bhopal, india">bhopal, india</option>
         </select>
         <textarea
-          {...register("caption", { required: "caption is required" , })}
+          {...register("caption", { required: "caption is required" })}
           placeholder="Write a caption..."
           className="w-full p-3 outline-0 rounded-md border focus:border-green-400"
           name="caption"
