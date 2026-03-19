@@ -42,7 +42,6 @@ const Form = ({
                 caption: data.caption,
                 profileImg: profileUrl,
                 postImg: mediaUrl,
-                // ...data,
               }
             : item,
         ),
@@ -143,7 +142,9 @@ const Form = ({
             name="username"
             id="username"
           />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+          {errors.username && (
+            <p className="text-red-500">{errors.username.message}</p>
+          )}
         </div>
         <select
           {...register("location", { required: "location is required" })}
@@ -158,6 +159,10 @@ const Form = ({
           <option value="tokyo, japan">tokyo, japan</option>
           <option value="bhopal, india">bhopal, india</option>
         </select>
+        {errors.location && (
+          <p className="text-red-500">{errors.location.message}</p>
+        )}
+
         <textarea
           {...register("caption", { required: "caption is required" })}
           placeholder="Write a caption..."
@@ -167,6 +172,9 @@ const Form = ({
           cols={5}
           rows={5}
         ></textarea>
+        {errors.caption && (
+          <p className="text-red-500">{errors.caption.message}</p>
+        )}
       </form>
     </div>
   );
