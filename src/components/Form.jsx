@@ -8,24 +8,26 @@ const Form = ({ setOption, setDemo, setToggleForm, demo }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+  });
 
   let handleFormSubmit = (data) => {
     console.log(data);
     console.log(Object.keys(data));
 
-    const profileFile = data.img[0]; 
+    const profileFile = data.img[0];
     const mediaFile = data.media_img[0];
 
     const profileUrl = profileFile ? URL.createObjectURL(profileFile) : "";
     const mediaUrl = mediaFile ? URL.createObjectURL(mediaFile) : "";
 
-     let newData = {
+    let newData = {
       id: demo.length + 1,
       username: data.username,
-      profileImg: profileUrl, 
+      profileImg: profileUrl,
       location: data.location,
-      postImg: mediaUrl, 
+      postImg: mediaUrl,
       likes: 0,
       comments: 0,
       shares: 0,

@@ -106,13 +106,19 @@ const App = () => {
       tags: ["#javascript", "#mern"],
     },
   ]);
+  // let storyData = [...demo]
   console.log(demo);
   const [toggleForm, setToggleForm] = useState(false);
 
   return (
     <div className="app-wrapper min-h-screen w-screen bg-gray-100 text-gray-800 flex flex-col items-center p-2 rounded-xl">
       {toggleForm ? (
-        <Form setOption={setToggleForm} setDemo={setDemo} setToggleForm={setToggleForm} demo={demo}/>
+        <Form
+          setOption={setToggleForm}
+          setDemo={setDemo}
+          setToggleForm={setToggleForm}
+          demo={demo}
+        />
       ) : (
         <div className="app-container max-w-xs w-full h-full p-3 flex flex-col gap-5  rounded-xl">
           <header className="header-wrapper w-full h-10 p-1 flex items-center justify-between  text-[#3E65FF] rounded-xl ">
@@ -131,11 +137,11 @@ const App = () => {
               </button>
             </div>
           </header>
-          <div className="user-story-wrapper p-1 flex gap-2 overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {demo.map((data,_idx) => {
+          {/* <div className="user-story-wrapper p-1 flex gap-2 overflow-x-scroll [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {demo.map((data, _idx) => {
               return <StoryCards key={_idx} data={data} />;
             })}
-          </div>
+          </div> */}
           <div className="post-card-wrapper w-full p-1 flex flex-col gap-5 rounded-xl">
             {demo.map((data) => {
               return <PostCard data={data} setDemo={setDemo} key={data.id} />;

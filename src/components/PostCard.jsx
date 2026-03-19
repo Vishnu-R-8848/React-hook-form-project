@@ -14,7 +14,20 @@ const PostCard = ({ data, setDemo }) => {
 
   return (
     <div
-      onDoubleClick={() => {}}
+      onDoubleClick={() => {
+        console.log(data.likes);
+        let newCount = Number(data.likes) + 1;
+        setDemo((prev) => {
+          prev.map((item) => {
+            if (item.id === data.id) {
+              item.likes = newCount;
+            }
+          });
+          return prev.map((item) => {
+            return item;
+          });
+        });
+      }}
       id={data.id}
       className="post-card min-h-150- max-h-200 h-full w-full px-2 py-3 bg-[#FFFFFF] rounded-lg flex flex-col gap-2"
     >
@@ -46,9 +59,7 @@ const PostCard = ({ data, setDemo }) => {
           <div className="red bg-black/52 h-1 w-1 rounded-full"></div>
         </div>
         {options ? (
-          <div
-            className={`display-card-options flex flex-col gap-2 capitalize bg-gray-100 h-fit w-[150px] p-1 rounded-lg absolute right-0 top-0`}
-          >
+          <div className="display-card-options flex flex-col gap-2 capitalize bg-gray-100 h-fit w-[150px] p-1 rounded-lg absolute right-0 top-0">
             <button
               className="capitalize text-xl cursor-pointer flex gap-1 justify-around  rounded-md"
               onClick={() => setOptions((prev) => !prev)}
@@ -120,7 +131,7 @@ const PostCard = ({ data, setDemo }) => {
           <span className="caption-text font-light ml-1.5">{data.caption}</span>
         </p>
         <div className="hash-tags-wrapper uppercase">
-          {/* {data.tags.map((tag, _idx) => {
+          {data.tags.map((tag, _idx) => {
             return (
               <span
                 key={_idx}
@@ -129,7 +140,7 @@ const PostCard = ({ data, setDemo }) => {
                 {tag}
               </span>
             );
-          })} */}
+          })}
         </div>
       </div>
     </div>
