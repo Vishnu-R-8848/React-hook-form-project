@@ -8,9 +8,9 @@ import {
   RiDeleteBin5Line,
 } from "@remixicon/react";
 
-const PostCard = ({ data, setDemo, handleEdit,setToggleForm }) => {
+const PostCard = ({ data, setDemo, handleEdit, setToggleForm }) => {
   const [options, setOptions] = useState(false);
-  const [overlay, setOverlay] = useState("flex");
+  const [overlay, setOverlay] = useState(false);
 
   return (
     <div
@@ -22,14 +22,26 @@ const PostCard = ({ data, setDemo, handleEdit,setToggleForm }) => {
               item.likes = newCount;
             }
           });
+          setOverlay((prev) => !prev);
+          setTimeout(() => {
+            setOverlay((prev) => !prev);
+          }, 1000);
           return prev.map((item) => {
             return item;
           });
         });
       }}
       id={data.id}
-      className="post-card min-h-150- max-h-200 h-full w-full px-2 py-3 bg-[#FFFFFF] rounded-lg flex flex-col gap-2"
+      className="post-card min-h-150- max-h-200 h-full w-full relative px-2 py-3 bg-[#FFFFFF] rounded-lg flex flex-col gap-2"
     >
+      <div
+        className={`overlay absolute ${overlay ? "z-10" : "-z-10"} w-full h-full flex items-center justify-center top-0 left-0 transition-all ease-linear`}
+      >
+        <img
+          src="./public/red-heart-heart-icon-like-emoji-valentines-day-heart-removebg-preview.png"
+          alt=""
+        />
+      </div>
       <div className="user-card-details-wrapper flex items-center justify-between gap-2 relative">
         <div className="user-card-details-container flex justify-between gap-2 ">
           <figure className="user-card-profile-img-wrapper h-10 w-10 rounded-full overflow-hidden">
